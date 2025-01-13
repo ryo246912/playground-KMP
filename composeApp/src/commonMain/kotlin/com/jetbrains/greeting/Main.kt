@@ -3,6 +3,7 @@ package com.jetbrains.greeting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -87,15 +88,23 @@ fun Main(
             }
         }
         items(10, key = { index -> "$index" }) { index ->
-            Text(
-                text = "$index",
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(24.dp),
-            )
+            Column {
+                Image(
+                    painter = imagePainter,
+                    contentDescription = "Artist Image",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+                Text(
+                    text = List(400) { ('A'..'Z').random() }.joinToString(""),
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(8.dp),
+                )
+            }
         }
     }
 }
+
 
 // 使用例 (プレビュー用)
 // @Composable
