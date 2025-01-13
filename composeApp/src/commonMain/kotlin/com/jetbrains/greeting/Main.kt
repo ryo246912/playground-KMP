@@ -3,13 +3,11 @@ package com.jetbrains.greeting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,11 +25,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.height
-import androidx.compose.ui.unit.offset
-import androidx.compose.ui.unit.size
 import androidx.compose.ui.unit.sp
-import kotlin.text.toInt
 
 @Composable
 fun Main(
@@ -39,69 +33,66 @@ fun Main(
     artistName: String,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        var boxHeight by remember { mutableStateOf(0) }
+        item {
+            var boxHeight by remember { mutableStateOf(0) }
 
-        Box(
-            modifier =
-                Modifier.fillMaxWidth().fillMaxHeight(0.75f).onGloballyPositioned { coordinates ->
-//          高さを取得
-                    boxHeight = coordinates.size.height
-                },
-        ) {
-            Image(
-                painter = imagePainter,
-                contentDescription = "Artist Image",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-            )
             Box(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.5f)
-                        .align(Alignment.BottomCenter)
-                        .background(
-                            brush =
-                                Brush.verticalGradient(
-                                    colors =
-                                        listOf(
-                                            Color.Transparent,
-                                            Color.Black,
-                                        ),
-                                ),
-                        ),
-            )
-            Text(
-                text = artistName,
-                color = Color.White,
-                fontSize = 24.sp,
-                modifier =
-                    Modifier
-                        .align(Alignment.TopCenter)
-                        .offset {
-                            IntOffset(
-                                x = 0,
-                                y = (boxHeight * 0.75f).toInt(),
-                            )
-                        }.padding(16.dp),
-            )
-        }
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            items(10, key = { index -> "$index" }) { index ->
+                    Modifier.fillMaxWidth().fillMaxHeight(0.75f).onGloballyPositioned { coordinates ->
+//          高さを取得
+                        boxHeight = coordinates.size.height
+                    },
+            ) {
+                Image(
+                    painter = imagePainter,
+                    contentDescription = "Artist Image",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(0.5f)
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                brush =
+                                    Brush.verticalGradient(
+                                        colors =
+                                            listOf(
+                                                Color.Transparent,
+                                                Color.Black,
+                                            ),
+                                    ),
+                            ),
+                )
                 Text(
-                    text = "$index",
+                    text = artistName,
+                    color = Color.White,
                     fontSize = 24.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(8.dp),
+                    modifier =
+                        Modifier
+                            .align(Alignment.TopCenter)
+                            .offset {
+                                IntOffset(
+                                    x = 0,
+                                    y = (boxHeight * 0.75f).toInt(),
+                                )
+                            }.padding(16.dp),
                 )
             }
+        }
+        items(10, key = { index -> "$index" }) { index ->
+            Text(
+                text = "$index",
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(24.dp),
+            )
         }
     }
 }
